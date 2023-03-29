@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Client",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "first_name": {
+      "oneOf": [
+        {
+          "type": "null",
+          "title": "Not included"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "last_name": {
+      "oneOf": [
+        {
+          "type": "null",
+          "title": "Not included"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

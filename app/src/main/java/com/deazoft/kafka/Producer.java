@@ -1,13 +1,12 @@
 package com.deazoft.kafka;
 
-import io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer;
+import com.deazoft.kafka.entities.User;
 import io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
-import reactor.core.publisher.Flux;
 
 import java.util.Properties;
 

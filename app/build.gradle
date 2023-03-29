@@ -41,7 +41,7 @@ ext {
     jacksonDatabindVersion = '2.13.4.2!!'
 
     // Kafka
-    kafkaVersion = '3.1.1'
+    kafkaVersion = '3.4.0'
 }
 
 repositories {
@@ -55,24 +55,25 @@ repositories {
 schemaRegistry {
     url = 'http://localhost:8081'
     quiet = false
-    outputDirectory = 'resources/schemas/json/results/'
+    def resourcesDir = "$project.projectDir/src/main/resources"
+    outputDirectory = "$resourcesDir/schemas/json/results/"
 
     register {
-        subject('test-jd-automatic-value', 'schemas/json/location-latlong.json', 'JSON')
-        subject('addi-mono-log-value', 'schemas/json/location-latlong.json', 'JSON')
-        subject('addi-mono-log-user-value', 'schemas/json/user.json', 'JSON')
+        subject('multiple-Client', "$resourcesDir/schemas/json/client.json", 'JSON')
     }
 }
 
 
 dependencies {
-
+    implementation "org.slf4j:slf4j-simple:1.7.9"
     // confluent
     implementation 'io.confluent:kafka-json-schema-serializer:7.3.2'
     implementation 'io.confluent:kafka-schema-registry-client:7.3.2'
     implementation 'org.apache.kafka:kafka-clients:7.3.2-ce'
+    implementation 'io.confluent:kafka-streams-json-schema-serde:7.3.2'
 
     implementation 'io.confluent:confluent-log4j:1.2.17-cp10'
+    implementation("org.slf4j:slf4j-api:1.7.30")
 
     implementation "org.apache.kafka:kafka-streams:${kafkaVersion}"
     implementation "io.projectreactor.kafka:reactor-kafka:${kafkaReactorVersion}"

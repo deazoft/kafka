@@ -3,10 +3,8 @@
  */
 package com.deazoft.kafka;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
@@ -17,10 +15,7 @@ import reactor.kafka.receiver.ReceiverRecord;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+public class SimpleConsumer {
 
     public static Publisher<ReceiverRecord<StringDeserializer, KafkaJsonSchemaDeserializer>> build(
             String servers, String clientId, String groupId, String... topics) {
@@ -32,7 +27,6 @@ public class App {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaJsonSchemaDeserializer.class);
         props.put("schema.registry.url","http://127.0.0.1:8081");
         props.put("auto.offset.reset", "earliest");
-        //props.put("value.subject.name.strategy",io.confluent.kafka.serializers.subject.TopicRecordNameStrategy.class);
 
         final var receiverOptions =
                 ReceiverOptions.<StringDeserializer, KafkaJsonSchemaDeserializer>create(props);
@@ -41,7 +35,7 @@ public class App {
         return KafkaReceiver.create(opts).receive();
     }
     public static void main(String[] args) {
-        Flux.from(build("localhost:9092", "clientJd", "groupIdJd", "test"))
+        Flux.from(build("localhost:9092", "clientJd", "groupIdJd", "multiple"))
                 .doOnError(throwable -> System.out.println(String.format("Error %s", throwable.toString())))
                 .subscribe(System.out::println);
     }
